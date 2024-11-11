@@ -19,6 +19,10 @@ namespace ViaticosWeb.Controllers
         {
             return View();
         }
+        public ActionResult ValeCombustible()
+        {
+            return View();
+        }
         public ActionResult ListaVehiculos (string VehPla)
         {
             dbVehiculos vehiculos = new dbVehiculos();
@@ -34,17 +38,21 @@ namespace ViaticosWeb.Controllers
         public ActionResult Historial(int item)
         {
             dbVehiculos vehiculos = new dbVehiculos();
-            var listaVehiculos = vehiculos.ObtenerHistorialVehiculo(item);
+            var listaVehiculos = vehiculos.ObtenerHistorialVehiculo();
 
             // Pasar la lista de vehículos a la vista
             return View(listaVehiculos);
         }
 
-
-        public ActionResult ValeCombustible()
+        public ActionResult ListaVales()
         {
-           
-            return View();
+            dbVehiculos vales = new dbVehiculos();
+            var listavales = vales.ObtenerListaVales();
+            
+
+            // Pasar la lista de vehículos a la vista
+            return View(listavales);
         }
+
     }
 }

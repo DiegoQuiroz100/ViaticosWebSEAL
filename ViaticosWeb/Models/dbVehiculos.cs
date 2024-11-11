@@ -62,7 +62,7 @@ namespace ViaticosWeb.Models
         }
 
 
-        public List<ListaVehiculos> ObtenerHistorialVehiculo(int item)
+        public List<ListaVehiculos> ObtenerHistorialVehiculo()
         {
             List<ListaVehiculos> historialVehiculo = new List<ListaVehiculos>();
 
@@ -86,8 +86,6 @@ namespace ViaticosWeb.Models
 
                 using (SqlCommand cmd = new SqlCommand(listquery, con1))
                 {
-                    cmd.Parameters.AddWithValue("@Item", item);
-
                     con1.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -114,6 +112,99 @@ namespace ViaticosWeb.Models
                 }
             }
             return historialVehiculo;
+        }
+        public List<ListaVales> ObtenerListaVales()
+        {
+            List<ListaVales> ListaVales = new List<ListaVales>();
+
+            using (SqlConnection con1 = new SqlConnection(connectionString))
+            {
+                string listquery = @"
+                            SELECT
+                                A.solcod,
+                                F.MarNom,
+                                C.vehpla,
+                                C.Asignado,
+                                D.descripcion,
+                                A.km,
+                                B.cantidadmod AS cantidad,
+                                E.descripcion AS grifo,
+                                H.DESCRPCION AS vo2cod,
+                                B.tipmed,
+                                CASE
+                                    WHEN A.ESTADO = 'G' THEN 'Generada'
+                                    WHEN A.ESTADO = 'A' THEN 'Autorizado'
+                                    WHEN A.ESTADO = 'R' THEN 'Revisado'
+                                    WHEN A.ESTADO = 'X' THEN 'Anulado'
+                                    WHEN A.ESTADO = 'F' THEN 'Facturado'
+                                    WHEN A.ESTADO = 'I' THEN 'Impreso'
+                                END AS Estado,
+                                A.fecimp AS fegreg,
+                                B.pu,
+                                B.total,
+                                G.NRODOC,
+                                G.RUC,
+                                I.ARENOM
+                            FROM
+                                [Viaticos].[dbo].[VehCab] A
+                            INNER JOIN
+                                [Viaticos].[dbo].[VehDet] B ON A.SOLCOD = B.SOLCOD
+                            INNER JOIN
+                                [Viaticos].[dbo].[VehMae] C ON A.codveh = C.Item
+                            INNER JOIN
+                                [Viaticos].[dbo].[VehMot] D ON A.tipman = D.item
+                            INNER JOIN
+                                [Viaticos].[dbo].[VehGrifos] E ON A.codgrifo = E.item
+                            INNER JOIN
+                                [Viaticos].[dbo].[VehMar] F ON C.MarCod = F.Item
+                            INNER JOIN
+                                [Viaticos].[dbo].[VehFacturacion] G ON G.IDGrupo = A.codgrupo
+                            INNER JOIN
+                                [Viaticos].[dbo].[VehTipCom] H ON C.vo2cod = H.ITEM
+                            INNER JOIN
+                                [Viaticos].[dbo].[VehAreas] I ON I.ARECOD = A.GERCOD
+                            WHERE
+                                A.ESTADO = 'F'
+                                AND A.TIPO = 'V'
+                            ORDER BY
+                                    fegreg desc";
+
+                using (SqlCommand cmd = new SqlCommand(listquery, con1))
+                {
+                    con1.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var vale = new ListaVales
+                            {
+                                SolCod = reader["solcod"] == DBNull.Value ? 0 : Convert.ToInt32(reader["solcod"]),
+                                MarNom = reader["MarNom"] == DBNull.Value ? "" : reader["MarNom"].ToString(),
+                                Vehpla = reader["vehpla"] == DBNull.Value ? "" : reader["vehpla"].ToString(),
+                                Asignado = reader["Asignado"] == DBNull.Value ? "" : reader["Asignado"].ToString(),
+                                Descripcion = reader["descripcion"] == DBNull.Value ? "" : reader["descripcion"].ToString(),
+                                Km = reader["km"] == DBNull.Value ? 0 : Convert.ToInt32(reader["km"]),
+                                Cantidad = reader["cantidad"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["cantidad"]),
+                                Grifo = reader["grifo"] == DBNull.Value ? "" : reader["grifo"].ToString(),
+                                Vo2cod = reader["vo2cod"] == DBNull.Value ? "" : reader["vo2cod"].ToString(),
+                                TipMed = reader["tipmed"] == DBNull.Value ? "" : reader["tipmed"].ToString(),
+                                Estado = reader["Estado"] == DBNull.Value ? "" : reader["Estado"].ToString(),
+                                FecReg = reader["fegreg"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["fegreg"]),
+                                Pu = reader["pu"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["pu"]),
+                                Total = reader["total"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["total"]),
+                                NroDoc = reader["NRODOC"] == DBNull.Value ? "" : reader["NRODOC"].ToString(),
+                                Ruc = reader["RUC"] == DBNull.Value ? "" : reader["RUC"].ToString(),
+                                AreNom = reader["ARENOM"] == DBNull.Value ? "" : reader["ARENOM"].ToString()
+                            };
+
+                            ListaVales.Add(vale);
+                        }
+                    }
+                }
+            }
+            return ListaVales;
         }
     }
 }

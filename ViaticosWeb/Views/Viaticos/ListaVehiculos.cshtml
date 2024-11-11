@@ -10,12 +10,11 @@
                 <h3 class="card-title">LISTA DE VEHICULOS</h3>
             </div>
             <!-- /.card-header -->
-            <div class="card-body ">
+            <div class="card-body">
                 @using (Html.BeginForm("ListaVehiculos", "Viaticos", FormMethod.Get))
                 {
-                    <div class="card-body ">
-                        <div class=" row">
-
+                    <div class="card-body">
+                        <div class="row">
                             <div class="col-sm-6">
                                 <div class="col-md-4">
                                     <label for="StatusID" style="margin-top: 8px;">Empresa</label>
@@ -23,7 +22,6 @@
                                 <div class="col-md-8">
                                     <select class="form-control input-sm" id="suspendido" name="suspendido">
                                         <option value="0">SEAL</option>
-
                                     </select>
                                 </div>
                             </div>
@@ -39,60 +37,57 @@
                             <div class="col-sm-12">
                                 <br><br>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-sm btn-success" type="submit"> Buscar</button>
+                                    <button class="btn btn-sm btn-success" type="submit">Buscar</button>
                                 </span>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 }
-
                 <br />
                 <div id="" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
-                        <div class="col-sm-12" style=" overflow-x: auto; white-space: nowrap;">
-                            <table id="example1" class="table table-bordered table-striped ">
-                                <thead>
-                                    <tr>
-                                        <th>Historial</th>
-                                        <th>Codigo</th>
-                                        <th>Placa</th>
-                                        <th>Marca</th>
-                                        <th>Modelo</th>
-                                        <th>Combustible</th>
-                                        <th>Kilometraje</th>
-                                        <th>Estado</th>
-                                        <th>Año</th>
-                                        <th>Area asignada</th>
-                                        <th>Asignado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
+                        <div class="col-sm-12">
+                            <!-- Contenedor responsive para la tabla -->
+                            <div class="table-responsive">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <button type="button" class="btn btn-info" onclick="openModal('@item.CodAct')">Ver Historial</button>
-                                            </td>
-                                            <td>@item.CodAct</td>
-                                            <td>@item.VehPla</td>
-                                            <td>@item.MarNom</td>
-                                            <td>@item.Modelo</td>
-                                            <td>@item.Combustible</td>
-                                            <td>@item.VehKm</td>
-                                            <td>@item.VehEst</td>
-                                            <td>@item.VehAno</td>
-                                            <td>@item.AreaNom</td>
-                                            <td>@item.Asignado</td>
-
+                                            <th>Historial</th>
+                                            <th>Codigo</th>
+                                            <th>Placa</th>
+                                            <th>Marca</th>
+                                            <th>Modelo</th>
+                                            <th>Combustible</th>
+                                            <th>Kilometraje</th>
+                                            <th>Estado</th>
+                                            <th>Año</th>
+                                            <th>Area asignada</th>
+                                            <th>Asignado</th>
                                         </tr>
-                                    }
-
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <button type="button" class="btn btn-info" onclick="openModal('@item.Item')">Ver Historial</button>
+                                                </td>
+                                                <td>@item.CodAct</td>
+                                                <td>@item.VehPla</td>
+                                                <td>@item.MarNom</td>
+                                                <td>@item.Modelo</td>
+                                                <td>@item.Combustible</td>
+                                                <td>@item.VehKm</td>
+                                                <td>@item.VehEst</td>
+                                                <td>@item.VehAno</td>
+                                                <td>@item.AreaNom</td>
+                                                <td>@item.Asignado</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Fin tabla responsive -->
                         </div>
                     </div>
                 </div>
@@ -100,13 +95,14 @@
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function openModal(codAct) {
         $.ajax({
             url: '@Url.Action("ObtenerDetallesVehiculo", "Viaticos")',
             type: 'GET',
-            data: { codAct: codAct },
+            data: { Item: codAct },
             success: function (data) {
                 $('#modalBody').html(data);
                 $('#detailsModal').modal('show');
@@ -117,4 +113,3 @@
         });
     }
 </script>
-

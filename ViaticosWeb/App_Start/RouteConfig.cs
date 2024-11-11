@@ -16,7 +16,7 @@ namespace ViaticosWeb
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Viaticos", action = "ValeCombustible", id = UrlParameter.Optional }
+                defaults: new { controller = "Viaticos", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

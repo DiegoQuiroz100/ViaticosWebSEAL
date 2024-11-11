@@ -150,54 +150,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ViaticosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\dbVehiculos.cs" />
+    <Compile Include="Models\FormValeCombustible.cs" />
+    <Compile Include="Models\ListaVales.cs" />
     <Compile Include="Models\ListaVehiculos.cs" />
-    <Compile Include="Models\VehAutWeb.cs">
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VehCab.cs">
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VehCabAnt.cs">
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VehCabsController.cs" />
-    <Compile Include="Models\VehDet.cs">
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VehDetant.cs">
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VehDetNew.cs">
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VehFacturacion.cs">
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VehMae.cs">
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VehMaesController.cs" />
-    <Compile Include="Models\Viaticos.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Viaticos.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Viaticos.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Viaticos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Viaticos.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Viaticos.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -237,16 +197,6 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Viaticos.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Viaticos.edmx</DependentUpon>
-      <LastGenOutput>Viaticos.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Viaticos.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Viaticos.edmx</DependentUpon>
-      <LastGenOutput>Viaticos.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -280,13 +230,6 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <EntityDeploy Include="Models\Viaticos.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Viaticos.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Viaticos.edmx.diagram">
-      <DependentUpon>Viaticos.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\fontawesome\all.js" />
     <Content Include="Scripts\fontawesome\all.min.js" />
@@ -342,20 +285,10 @@
     <Content Include="Views\Viaticos\Index.cshtml" />
     <Content Include="Views\Viaticos\ValeCombustible.cshtml" />
     <Content Include="Views\Viaticos\ListaVehiculos.cshtml" />
-    <Content Include="Views\VehCabs\Create.cshtml" />
-    <Content Include="Views\VehCabs\Delete.cshtml" />
-    <Content Include="Views\VehCabs\Details.cshtml" />
-    <Content Include="Views\VehCabs\Edit.cshtml" />
-    <Content Include="Views\VehCabs\Index.cshtml" />
-    <Content Include="Views\VehMaes\Create.cshtml" />
-    <Content Include="Views\VehMaes\Delete.cshtml" />
-    <Content Include="Views\VehMaes\Details.cshtml" />
-    <Content Include="Views\VehMaes\Edit.cshtml" />
-    <Content Include="Views\VehMaes\Index.cshtml" />
+    <Content Include="Views\Viaticos\ListaVales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ValesCombustible\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -364,12 +297,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CapaDatos\CapaDatos.csproj">
-      <Project>{f72ef033-ecc5-4d11-b595-1768d5ca3418}</Project>
-      <Name>CapaDatos</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

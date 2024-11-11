@@ -1,0 +1,142 @@
+﻿@model IEnumerable<ViaticosWeb.Models.ListaVales>
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    /* Ocultar el campo de búsqueda global de DataTables */
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">LISTA DE VALES</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <br />
+                <!-- Filtros -->
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <input type="text" id="filterSolicitud" class="form-control" placeholder="Buscar Solicitud">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="filterMarca" class="form-control" placeholder="Buscar Marca">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="filterPlaca" class="form-control" placeholder="Buscar Placa">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="filterAsignado" class="form-control" placeholder="Buscar Asignado">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- Botones para Buscar y Borrar Filtros -->
+                    <div class="col-md-3">
+                        <button id="searchBtn" class="btn btn-primary btn-block">Buscar</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button id="clearFiltersBtn" class="btn btn-secondary btn-block">Borrar Filtros</button>
+                    </div>
+                </div>
+
+                <div id="" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12" style="overflow-x: auto; white-space: nowrap;">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Solicitud</th>
+                                        <th>Marca</th>
+                                        <th>Placa</th>
+                                        <th>Asignado</th>
+                                        <th>Descripcion</th>
+                                        <th>Km</th>
+                                        <th>Cantidad</th>
+                                        <th>Grifo</th>
+                                        <th>Combustible</th>
+                                        <th>Medida</th>
+                                        <th>Estado</th>
+                                        <th>Fecha Registro</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Total</th>
+                                        <th>NroDoc</th>
+                                        <th>RUC</th>
+                                        <th>Área</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.SolCod</td>
+                                            <td>@item.MarNom</td>
+                                            <td>@item.Vehpla</td>
+                                            <td>@item.Asignado</td>
+                                            <td>@item.Descripcion</td>
+                                            <td>@item.Km</td>
+                                            <td>@item.Cantidad</td>
+                                            <td>@item.Grifo</td>
+                                            <td>@item.Vo2cod</td>
+                                            <td>@item.TipMed</td>
+                                            <td>@item.Estado</td>
+                                            <td>@item.FecReg</td>
+                                            <td>@item.Pu</td>
+                                            <td>@item.Total</td>
+                                            <td>@item.NroDoc</td>
+                                            <td>@item.Ruc</td>
+                                            <td>@item.AreNom</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Agregar scripts para paginación y responsividad -->
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#example1').DataTable({
+                "paging": true,  // Habilitar paginación
+                "lengthChange": false,  // Ocultar el control de cantidad de registros por página
+                "searching": true,  // Habilitar búsqueda
+                "ordering": false,  // No permitir ordenar las columnas (para mantener el orden original)
+                "info": true,  // Mostrar información de la tabla
+                "autoWidth": false,  // Desactivar ajuste automático de ancho de columnas
+                "responsive": true  // Activar responsividad
+            });
+
+            // Función de búsqueda por columna al hacer clic en "Buscar"
+            $('#searchBtn').on('click', function () {
+                table.column(0).search($('#filterSolicitud').val()).draw();
+                table.column(1).search($('#filterMarca').val()).draw();
+                table.column(2).search($('#filterPlaca').val()).draw();
+                table.column(3).search($('#filterAsignado').val()).draw();
+                // Agregar más filtros si es necesario
+            });
+
+            // Función para borrar los filtros
+            $('#clearFiltersBtn').on('click', function () {
+                $('#filterSolicitud').val('');
+                $('#filterMarca').val('');
+                $('#filterPlaca').val('');
+                $('#filterAsignado').val('');
+                // Limpiar más filtros si es necesario
+
+                table.search('').columns().search('').draw();
+            });
+        });
+    </script>
+}
