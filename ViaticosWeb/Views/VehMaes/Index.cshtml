@@ -1,0 +1,136 @@
+﻿@model IEnumerable<ViaticosWeb.Models.VehMae>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Codact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehPla)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AreCod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MarCod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipCod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vo2Cod)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehKm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehEst)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehAno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Asignado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FecReg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.codemp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.celular)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecini)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecfin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecbaj)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehUnid)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Codact)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehPla)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AreCod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MarCod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipCod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vo2Cod)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehKm)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehEst)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehAno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Asignado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FecReg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.codemp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.celular)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecini)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecfin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecbaj)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehUnid)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Item }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Item }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Item })
+        </td>
+    </tr>
+}
+
+</table>

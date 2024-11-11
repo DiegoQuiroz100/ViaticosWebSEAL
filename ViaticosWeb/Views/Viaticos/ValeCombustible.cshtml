@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "ValeCombustible";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form class="p-4 shadow-sm bg-light rounded">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="placa-rodaje" class="form-label">Placa de Rodaje</label>
+            <select class="form-select" id="placa-rodaje">
+                <option value="V2E-386">V2E-386</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="marca" class="form-label">Marca</label>
+            <input type="text" class="form-control" id="marca" value="TOYOTA" disabled>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="anio" class="form-label">Año</label>
+            <input type="text" class="form-control" id="anio" value="2010" disabled>
+        </div>
+
+        <div class="col-md-6">
+            <label for="tipo" class="form-label">Tipo</label>
+            <input type="text" class="form-control" id="tipo" value="CAMIONETA RURAL" disabled>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="kilometraje" class="form-label">Kilometraje</label>
+            <input type="text" class="form-control" id="kilometraje">
+        </div>
+
+        <div class="col-md-6">
+            <label for="giro" class="form-label">Giro</label>
+            <select class="form-select" id="giro">
+                <option value="GRUPO CONEXIS OUTSORSING S.A.C">GRUPO CONEXIS OUTSORSING S.A.C</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="despacho" class="form-label">Despacho</label>
+            <input type="text" class="form-control" id="despacho" value="1" disabled>
+        </div>
+
+        <div class="col-md-6">
+            <label for="galones" class="form-label">Galones</label>
+            <input type="text" class="form-control" id="galones">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="gerencia-general" class="form-label">Gerencia General</label>
+            <select class="form-select" id="gerencia-general">
+                <option value="GERENCIA GENERAL">GERENCIA GENERAL</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="unidad" class="form-label">Unidad</label>
+            <select class="form-select" id="unidad">
+                <option value="GERENCIA">GERENCIA</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="area-asignada" class="form-label">Área Asignada</label>
+            <input type="text" class="form-control" id="area-asignada" value="MARPOPOL DE TABOADA" disabled>
+        </div>
+
+        <div class="col-md-6">
+            <label for="estado" class="form-label">Estado</label>
+            <input type="text" class="form-control" id="estado" value="BUENO" disabled>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="combustible" class="form-label">Combustible</label>
+            <input type="text" class="form-control" id="combustible" value="PETROLEO" disabled>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-primary me-2">Grabar</button>
+        <button type="button" class="btn btn-danger">Salir</button>
+    </div>
+</form>
