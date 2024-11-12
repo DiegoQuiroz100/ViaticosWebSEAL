@@ -10,7 +10,7 @@ namespace ViaticosWeb.Models
 {
     public class dbVehiculos
     {
-        private string connectionString = "data source=192.168.53.43;initial catalog=Viaticos;Integrated Security=True;";
+        private readonly string connectionString = "data source=192.168.53.43;initial catalog=Viaticos;user id=practact;password=Sistemas2024;";
 
         public List<ListaVehiculos> ObtenerVehiculos()
         {
@@ -81,7 +81,7 @@ namespace ViaticosWeb.Models
                                 FROM [Viaticos].[dbo].[VehCab] A 
                                 INNER JOIN [Viaticos].[dbo].[VehMot] B ON A.tipman = B.Item 
                                 LEFT JOIN [Viaticos].[dbo].[VehGrifos] C ON A.codgrifo = C.Item 
-                                WHERE A.codveh = @Item
+                                WHERE A.codveh = @codveh
                                 ORDER BY solcod ASC";
 
                 using (SqlCommand cmd = new SqlCommand(listquery, con1))

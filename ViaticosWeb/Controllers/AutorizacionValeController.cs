@@ -11,7 +11,7 @@ namespace ViaticosWeb.Controllers
     public class AutorizacionValeController : Controller
     {
         // Cadena de conexión especificada
-        private readonly string connectionString = "data source=192.168.53.43;initial catalog=Viaticos;Integrated Security=True";
+        private readonly string connectionString = "data source=192.168.53.43;initial catalog=Viaticos;user id=practact;password=Sistemas2024;";
 
         // Acción para mostrar la lista de vales de combustible
         public ActionResult Index()
@@ -33,7 +33,7 @@ namespace ViaticosWeb.Controllers
                     INNER JOIN [Viaticos].[dbo].[VehMot] D ON A.tipman = D.item
                     INNER JOIN [Viaticos].[dbo].[VehGrifos] E ON A.codgrifo = e.item
                     INNER JOIN [Viaticos].[dbo].[VehMar] F ON C.MarCod = F.Item
-                    WHERE A.TIPO = 'V' AND A.estado = 'G'
+                    WHERE A.TIPO = 'V' AND A.estado = 'G'and a.gercod = @Gerencia
                     ORDER BY a.solcod ASC";
 
                 SqlCommand cmd = new SqlCommand(query, connection);
