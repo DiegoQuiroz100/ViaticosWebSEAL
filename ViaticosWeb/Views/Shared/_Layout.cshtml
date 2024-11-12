@@ -8,12 +8,19 @@
     @Styles.Render("~/Content/css")
     @*@Scripts.Render("~/bundles/modernizr")*@
 </head>
+
+
 <body>
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark ">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="@Url.Action("Index","Viaticos")">App Seal Viaticos</a>
+        <a class="navbar-brand ps-3 d-flex align-items-center" href="@Url.Action("Index","Viaticos")">
+            <img src="~/Content/images/logoSEALpng-removebg-preview.png" alt="Logo" style="height: 40px; width: auto; margin-right: 10px;">
+
+        </a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        
+        App Seal Viaticos
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             @*<div class="input-group">
@@ -52,11 +59,11 @@
                         </a>
                         <div class="collapse" id="collapseLayouts">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link"  href="@Url.Action("ListaVehiculos","Viaticos")" >Mantenimiento de Vehiculos</a>
+                                <a class="nav-link"  href="@Url.Action("ListaVehiculos","Viaticos")" >Lista de Vehiculos</a>
                                 <a class="nav-link" href="layout-sidenav-light.html"></a>
                             </nav>
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Registro de Vehiculos</a>
+                                <a class="nav-link" href="@Url.Action("Index","Mantenimiento")">Mantenimiento de Vehiculos</a>
                                 <a class="nav-link" href="layout-sidenav-light.html"></a>
                             </nav>
                         </div>
@@ -67,29 +74,31 @@
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="@Url.Action("ValeCombustible","Viaticos")"    >
-                                    Solicitud Vale Combustible
-                                    
+                                <a class="nav-link collapsed" href="@Url.Action("ValeCombustible","Viaticos")">
+                                    SOLICITUD VALE
+
                                 </a>
-                                <a class="nav-link collapsed" href="@Url.Action("ListaVales","Viaticos")"  >
-                                    Lista Vales Combustible
-            
+                                <a class="nav-link collapsed" href="@Url.Action("ListaVales","Viaticos")">
+                                    LISTA VALES FACTURADOS
+
+                                </a>
+                                <a class="nav-link collapsed" href="@Url.Action("Index","RevisionVale")">
+                                    REVISAR VALES 
+
+                                </a>
+                                <a class="nav-link collapsed" href="@Url.Action("Index","AutorizacionVale")">
+                                    AUTORIZAR VALES
+
                                 </a>
                                 @*<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>*@
-                               
-                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.html">401 Page</a>
-                                        <a class="nav-link" href="404.html">404 Page</a>
-                                        <a class="nav-link" href="500.html">500 Page</a>
-                                    </nav>
-                                </div>
+            <nav class="sb-sidenav-menu-nested nav">
+                <a class="nav-link" href="login.html">Login</a>
+                <a class="nav-link" href="register.html">Register</a>
+                <a class="nav-link" href="password.html">Forgot Password</a>
+            </nav>
+        </div>*@
+
+
                             </nav>
                         </div>
                         @*<div class="sb-sidenav-menu-heading">Addons</div>

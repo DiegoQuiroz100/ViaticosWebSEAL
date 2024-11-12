@@ -1,0 +1,75 @@
+﻿@model List<ViaticosWeb.Models.RevisionVale>
+
+@{
+    ViewBag.Title = "Listado de Vales";
+}
+
+<div class="container my-4">
+    <h2 class="text-center mb-4">Listado de Vales de Combustible</h2>
+
+    <form method="post" action="/RevisionVale/Revisar">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th scope="col">Seleccionar</th>
+                        <th scope="col">Solicitud</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Placa</th>
+                        <th scope="col">Asignado</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Kilometraje</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Unidad</th>
+                        <th scope="col">Grifo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var vale in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <input type="checkbox" name="seleccionados" value="@vale.Solicitud" />
+                            </td>
+                            <td class="text-center">@vale.Solicitud</td>
+                            <td>@vale.Marca</td>
+                            <td>@vale.Placa</td>
+                            <td>@vale.Asignado</td>
+                            <td>@vale.Descripcion</td>
+                            <td class="text-center">@vale.KM</td>
+                            <td class="text-center">@vale.Cantidad</td>
+                            <td class="text-center">@vale.Unidad</td>
+                            <td>@vale.Grifo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <button type="submit" formaction="/RevisionVale/Revisar" class="btn btn-success btn-lg">
+                Revisar Seleccionados
+            </button>
+            <button type="submit" formaction="/RevisionVale/Anular" class="btn btn-danger btn-lg">
+                Anular Seleccionados
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .table thead th {
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+    }
+
+    h2 {
+        font-weight: bold;
+        color: #333;
+    }
+</style>

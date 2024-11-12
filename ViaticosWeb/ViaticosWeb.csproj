@@ -150,14 +150,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AutorizacionValeController.cs" />
+    <Compile Include="Controllers\RevisionValeController.cs" />
     <Compile Include="Controllers\ViaticosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AutorizacionVale.cs" />
     <Compile Include="Models\dbVehiculos.cs" />
-    <Compile Include="Models\FormValeCombustible.cs" />
     <Compile Include="Models\ListaVales.cs" />
     <Compile Include="Models\ListaVehiculos.cs" />
+    <Compile Include="Models\RevisionVale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +188,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\images\logoSEALpng-removebg-preview.png" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
     <Content Include="Content\solid.css" />
@@ -286,6 +290,8 @@
     <Content Include="Views\Viaticos\ValeCombustible.cshtml" />
     <Content Include="Views\Viaticos\ListaVehiculos.cshtml" />
     <Content Include="Views\Viaticos\ListaVales.cshtml" />
+    <Content Include="Views\RevisionVale\Index.cshtml" />
+    <Content Include="Views\AutorizacionVale\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
