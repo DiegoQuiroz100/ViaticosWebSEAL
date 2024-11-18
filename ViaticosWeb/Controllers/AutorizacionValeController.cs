@@ -33,7 +33,7 @@ namespace ViaticosWeb.Controllers
                     INNER JOIN [Viaticos].[dbo].[VehMot] D ON A.tipman = D.item
                     INNER JOIN [Viaticos].[dbo].[VehGrifos] E ON A.codgrifo = e.item
                     INNER JOIN [Viaticos].[dbo].[VehMar] F ON C.MarCod = F.Item
-                    WHERE A.TIPO = 'V' AND A.estado = 'G'and a.gercod = @Gerencia
+                    WHERE A.TIPO = 'V' AND A.estado = 'G'
                     ORDER BY a.solcod ASC";
 
                 SqlCommand cmd = new SqlCommand(query, connection);

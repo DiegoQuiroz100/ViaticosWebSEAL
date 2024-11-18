@@ -130,7 +130,7 @@ namespace ViaticosWeb.Controllers
                     }
 
                     TempData["SuccessMessage"] = "Descarga y actualización exitosa.";
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Vehiculos.xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ListaValesImpresos.xlsx");
                 }
             }
 
