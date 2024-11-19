@@ -1,0 +1,228 @@
+﻿@model ViaticosWeb.Models.VehiculoCombustible
+@{ ViewBag.Title = "Vale de Combustible"; }
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">Vale de Combustible</h3>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Grabar", "VehiculoCombustible", FormMethod.Post, new { id = "formValeCombustible" }))
+            {
+@Html.AntiForgeryToken()
+
+                <div class="row">
+                    <!-- Primera columna -->
+                    <div class="col-lg-6 col-md-12 mb-4">
+
+
+                        <div class="form-group mb-3">
+                            @Html.Label("Gerencia", new { @class = "form-label" })
+                            @Html.DropDownList("GerenciaId", (SelectList)ViewBag.Gerencias, "Seleccione...", new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.GerenciaId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.Label("Unidad", new { @class = "form-label" })
+                            @Html.DropDownList("UnidadId", new SelectList(new List<SelectListItem>()), "Seleccione...", new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.UnidadId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.Label("Placa", new { @class = "form-label" })
+                            @Html.DropDownList("PlacaId", new SelectList(new List<SelectListItem>()), "Seleccione...", new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.PlacaId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Marca, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Marca, new { @class = "form-control", @readonly = "readonly", placeholder = "Marca del vehículo" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.AnioVehiculo, "Año", new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.AnioVehiculo, new { @class = "form-control", @readonly = "readonly", placeholder = "Año del vehículo" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.TipoVehiculo, "Tipo de Vehículo", new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.TipoVehiculo, new { @class = "form-control", @readonly = "readonly", placeholder = "Tipo de vehículo" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.AreaAsignada, "Área Asignada", new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.AreaAsignada, new { @class = "form-control", @readonly = "readonly", placeholder = "Área asignada" })
+                        </div>
+                    </div>
+
+                    <!-- Segunda columna -->
+                    <div class="col-lg-6 col-md-12 mb-4">
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Asignado, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Asignado, new { @class = "form-control", @readonly = "readonly", placeholder = "Responsable" })
+                        </div>
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Estado, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Estado, new { @class = "form-control", @readonly = "readonly", placeholder = "Estado del vehículo" })
+                        </div>
+
+                        <div class="form-group mb-3 combustible-normal">
+                            @Html.LabelFor(m => m.Combustible, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Combustible, new { @class = "form-control", @readonly = "readonly", placeholder = "Tipo de combustible" })
+                        </div>
+
+                        <div class="form-group mb-3 combustible-especial d-none">
+                            @Html.Label("Tipo de Combustible", new { @class = "form-label" })
+                            @Html.DropDownList("TipoCombustibleId",
+                                               new SelectList(new[] {
+                                    new SelectListItem { Text = "Gasolina 90", Value = "1" },
+                                    new SelectListItem { Text = "Gasolina 95", Value = "2" },
+                                    new SelectListItem { Text = "Gasolina 97", Value = "3" },
+                                    new SelectListItem { Text = "Diesel", Value = "4" }
+           }, "Value", "Text"),
+                                               new { @class = "form-select" })
+                        </div>
+                        <div class="form-group mb-3">
+                            @Html.Label("Grifo", new { @class = "form-label" })
+                            @Html.DropDownList("GrifoId", (SelectList)ViewBag.Grifos, "Seleccione...", new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.GrifoId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Kilometraje, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Kilometraje, new { @class = "form-control", type = "number", step = "0.01", placeholder = "Ingrese el kilometraje" })
+                            @Html.ValidationMessageFor(m => m.Kilometraje, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(m => m.Cantidad, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", type = "number", step = "0.01", placeholder = "Cantidad en litros" })
+                            @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                                @Html.HiddenFor(m => m.CodigoActivo)
+                                                @Html.HiddenFor(m => m.CodigoCombustible) <!-- Botones -->
+                                                                                <div class="text-end">
+                                                                                    <button type="button" class="btn btn-primary me-2" id="btnGrabar">Grabar</button>
+                                                                                    <a href="@Url.Action("Index", "Viaticos")" class="btn btn-secondary">Salir</a>
+                                                                                </div>            }
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Manejador de cambio en Gerencia
+        $("#GerenciaId").change(function () {
+            var gerenciaId = $(this).val();
+            if (gerenciaId) {
+                $.getJSON("/VehiculoCombustible/ObtenerUnidades", { gerenciaId: gerenciaId }, function (data) {
+                    var unidadSelect = $("#UnidadId");
+                    unidadSelect.empty();
+                    unidadSelect.append($('<option></option>').val('').text('Seleccione...'));
+                    $.each(data, function (index, item) {
+                        unidadSelect.append($('<option></option>').val(item.AreCod).text(item.AreNom));
+                    });
+                });
+            }
+            limpiarFormulario();
+        });
+
+        // Manejador de cambio en Unidad
+        $("#UnidadId").change(function () {
+            var unidadId = $(this).val();
+            if (unidadId) {
+                $.getJSON("/VehiculoCombustible/ObtenerPlacas", { unidadId: unidadId }, function (data) {
+                    var placaSelect = $("#PlacaId");
+                    placaSelect.empty();
+                    placaSelect.append($('<option></option>').val('').text('Seleccione...'));
+                    $.each(data, function (index, item) {
+                        placaSelect.append($('<option></option>').val(item.Item).text(item.VehPla));
+                    });
+                });
+            }
+            limpiarFormulario();
+        });
+
+        // Manejador de cambio en Placa
+        $("#PlacaId").change(function () {
+            var placaId = $(this).val();
+            if (placaId) {
+                $.post("/VehiculoCombustible/ObtenerDetalleVehiculo", { placaId: placaId }, function (data) {
+                    $("#Marca").val(data.Marca);
+                    $("#AnioVehiculo").val(data.AnioVehiculo);
+                    $("#TipoVehiculo").val(data.TipoVehiculo);
+                    $("#AreaAsignada").val(data.AreaAsignada);
+                    $("#Asignado").val(data.Asignado);
+                    $("#Estado").val(data.Estado);
+                    $("#Combustible").val(data.Combustible);
+                    $("#CodigoActivo").val(data.CodigoActivo);
+                    $("#CodigoCombustible").val(data.CodigoCombustible);
+
+                    if (data.CodigoActivo === "991" || data.CodigoActivo === "992") {
+                        $(".combustible-especial").show();
+                        $(".combustible-normal").hide();
+                    } else {
+                        $(".combustible-especial").hide();
+                        $(".combustible-normal").show();
+                    }
+                });
+            } else {
+                limpiarFormulario();
+            }
+        });
+
+        function limpiarFormulario() {
+            $("#Marca").val('');
+            $("#AnioVehiculo").val('');
+            $("#TipoVehiculo").val('');
+            $("#AreaAsignada").val('');
+            $("#Asignado").val('');
+            $("#Estado").val('');
+            $("#Combustible").val('');
+            $("#CodigoActivo").val('');
+            $("#CodigoCombustible").val('');
+            $("#Kilometraje").val('');
+            $("#Cantidad").val('');
+            $(".combustible-especial").hide();
+            $(".combustible-normal").show();
+        }
+
+        $("#btnGrabar").click(function () {
+            if ($("#Kilometraje").val() === "" || $("#Kilometraje").val() === "0") {
+                alert("Debe ingresar el kilometraje.");
+                $("#Kilometraje").focus();
+                return;
+            }
+
+            if ($("#Cantidad").val() === "" || $("#Cantidad").val() === "0") {
+                alert("Debe ingresar la cantidad.");
+                $("#Cantidad").focus();
+                return;
+            }
+
+            if (confirm("¿Está seguro que desea guardar el vale de consumo?")) {
+                var form = $("#formValeCombustible");
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            limpiarFormulario();
+                            $("#GerenciaId").val('').trigger('change');
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Ocurrió un error al procesar la solicitud.");
+                    }
+                });
+            }
+        });
+    });</script>

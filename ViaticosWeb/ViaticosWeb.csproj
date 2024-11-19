@@ -343,22 +343,18 @@
     <Compile Include="Controllers\AutorizacionValeController.cs" />
     <Compile Include="Controllers\ImprimirValeController.cs" />
     <Compile Include="Controllers\RevisionValeController.cs" />
-    <Compile Include="Controllers\ValeCombustibleController.cs" />
+    <Compile Include="Controllers\VehiculoCombustibleController.cs" />
     <Compile Include="Controllers\ViaticosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AreaViewModel.cs" />
     <Compile Include="Models\AutorizacionVale.cs" />
     <Compile Include="Models\dbVehiculos.cs" />
-    <Compile Include="Models\GrifoViewModel.cs" />
     <Compile Include="Models\ImprimirValeModel.cs" />
     <Compile Include="Models\ListaVales.cs" />
     <Compile Include="Models\ListaVehiculos.cs" />
-    <Compile Include="Models\PlacaViewModel.cs" />
     <Compile Include="Models\RevisionVale.cs" />
-    <Compile Include="Models\ValeCombustibleViewModel.cs" />
-    <Compile Include="Models\VehiculoViewModel.cs" />
+    <Compile Include="Models\VehiculoCombustible.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -490,7 +486,8 @@
     <Content Include="Views\RevisionVale\Index.cshtml" />
     <Content Include="Views\AutorizacionVale\Index.cshtml" />
     <Content Include="Views\Viaticos\ValeCombustible.cshtml" />
-    <Content Include="Views\ValeCombustible\Index.cshtml" />
+    <Content Include="Views\VehiculoCombustible\Index.cshtml" />
+    <Content Include="Views\ImprimirVale\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
