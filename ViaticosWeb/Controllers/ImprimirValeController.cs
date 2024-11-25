@@ -11,6 +11,7 @@ using ViaticosWeb.Models;
 
 namespace ViaticosWeb.Controllers
 {
+    [CustomAuthorize]
     public class ImprimirValeController : Controller
     {
         private readonly string connectionString = "data source=192.168.53.43;initial catalog=Viaticos;user id=practact;password=Sistemas2024;";
@@ -40,7 +41,7 @@ namespace ViaticosWeb.Controllers
             using (var connection = new SqlConnection(connectionString))
             using (var command = new SqlCommand(query, connection))
             {
-               
+
 
                 connection.Open();
                 using (var reader = command.ExecuteReader())

@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using ViaticosWeb.Models;
 
 namespace ViaticosWeb
 {
@@ -8,6 +9,7 @@ namespace ViaticosWeb
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            //filters.Add(new CustomAuthorizeAttribute());
         }
     }
 }

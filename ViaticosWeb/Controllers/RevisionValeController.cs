@@ -6,6 +6,7 @@ using ViaticosWeb.Models;
 
 namespace ViaticosWeb.Controllers
 {
+    [CustomAuthorize]
     public class RevisionValeController : Controller
     {
         private readonly string connectionString = "data source=192.168.53.43;initial catalog=Viaticos;user id=practact;password=Sistemas2024;";
@@ -60,24 +61,67 @@ namespace ViaticosWeb.Controllers
                 return RedirectToAction("Index");
             }
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                foreach (var id in seleccionados)
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecrev = GETDATE(), estado = 'R' WHERE solcod = @solcod";
-                    SqlCommand cmd = new SqlCommand(query, connection);
-
-                    cmd.Parameters.AddWithValue("@solcod", id);
-
                     connection.Open();
-                    cmd.ExecuteNonQuery();
-                    connection.Close();
+
+                    foreach (var solcod in seleccionados)
+                    {
+                        string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecrev = GETDATE(), usurev = @usurev, estado = 'R' WHERE solcod = @solcod";
+                        using (SqlCommand cmd = new SqlCommand(query, connection))
+                        {
+                            // Asignar parámetros para la consulta SQL
+                            cmd.Parameters.AddWithValue("@usurev", User.Identity.Name); // Suponiendo que el usuario está autenticado
+                            cmd.Parameters.AddWithValue("@solcod", solcod);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
                 }
+
+                TempData["SuccessMessage"] = "Vales revisados con éxito.";
+            }
+            catch (SqlException ex)
+            {
+                TempData["ErrorMessage"] = $"Error en la base de datos: {ex.Message}";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Ocurrió un error: {ex.Message}";
             }
 
-            TempData["SuccessMessage"] = "Vales revisados con éxito.";
             return RedirectToAction("Index");
         }
+        //[HttpPost]
+        //public ActionResult Revisar(List<int> seleccionados)
+        //{
+        //    if (seleccionados == null || seleccionados.Count == 0)
+        //    {
+        //        TempData["ErrorMessage"] = "No se seleccionaron vales para revisar.";
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        foreach (var id in seleccionados)
+        //        {
+        //            string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecrev = GETDATE(), usurev = @usurev, estado = 'R' WHERE solcod = @solcod";
+        //            //string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecrev = GETDATE(), estado = 'R' WHERE solcod = @solcod";
+        //            SqlCommand cmd = new SqlCommand(query, connection);
+
+        //            cmd.Parameters.AddWithValue("@solcod", id);
+
+        //            connection.Open();
+        //            cmd.ExecuteNonQuery();
+        //            connection.Close();
+        //        }
+        //    }
+
+        //    TempData["SuccessMessage"] = "Vales revisados con éxito.";
+        //    return RedirectToAction("Index");
+        //}
 
         [HttpPost]
         public ActionResult Anular(List<int> seleccionados)
@@ -88,22 +132,37 @@ namespace ViaticosWeb.Controllers
                 return RedirectToAction("Index");
             }
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                foreach (var id in seleccionados)
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE [Viaticos].[dbo].[VehCab] SET fecanu = GETDATE(), estado = 'X' WHERE solcod = @solcod";
-                    SqlCommand cmd = new SqlCommand(query, connection);
-
-                    cmd.Parameters.AddWithValue("@solcod", id);
-
                     connection.Open();
-                    cmd.ExecuteNonQuery();
-                    connection.Close();
+
+                    foreach (var solcod in seleccionados)
+                    {
+                        string query = "UPDATE [Viaticos].[dbo].[VehCab] SET fecanu = GETDATE(), usuanu = @usuanu, estado = 'X' WHERE solcod = @solcod";
+                        using (SqlCommand cmd = new SqlCommand(query, connection))
+                        {
+                            // Asignar parámetros para la consulta SQL
+                            cmd.Parameters.AddWithValue("@usuanu", User.Identity.Name); // Usuario actual
+                            cmd.Parameters.AddWithValue("@solcod", solcod);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
                 }
+
+                TempData["SuccessMessage"] = "Vales anulados con éxito.";
+            }
+            catch (SqlException ex)
+            {
+                TempData["ErrorMessage"] = $"Error en la base de datos: {ex.Message}";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Ocurrió un error: {ex.Message}";
             }
 
-            TempData["SuccessMessage"] = "Vales anulados con éxito.";
             return RedirectToAction("Index");
         }
     }

@@ -8,6 +8,7 @@ using ViaticosWeb.Models; //
 
 namespace ViaticosWeb.Controllers
 {
+    [CustomAuthorize]
     public class AutorizacionValeController : Controller
     {
         // Cadena de conexión especificada

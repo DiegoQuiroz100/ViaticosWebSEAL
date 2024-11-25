@@ -5,6 +5,7 @@ namespace ViaticosWeb.Models
 {
     public class VehiculoCombustible
     {
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El kilometraje es requerido")]

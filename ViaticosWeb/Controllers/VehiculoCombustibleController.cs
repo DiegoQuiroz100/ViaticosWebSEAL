@@ -8,6 +8,7 @@ using System.Configuration;
 
 namespace VehiculosCombustible.Controllers
 {
+    [CustomAuthorize]
     public class VehiculoCombustibleController : Controller
     {
 

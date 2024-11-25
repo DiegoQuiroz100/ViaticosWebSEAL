@@ -1,0 +1,98 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 30px;
+            text-align: center;
+        }
+
+            /* Estilo para la imagen */
+            .login-container img {
+                width: 200px; /* Ajusta el tamaño de la imagen */
+                height: auto; /* Mantiene la relación de aspecto */
+                margin-bottom: 10px; /* Espacio debajo de la imagen */
+                object-fit:fill; /* Hace que la imagen se ajuste sin perder su proporción */
+            }
+
+            .login-container h2 {
+                margin-bottom: 20px;
+                font-size: 24px;
+                color: #333333;
+            }
+
+            .login-container form {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .login-container input {
+                margin-bottom: 15px;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #cccccc;
+                border-radius: 5px;
+                width: calc(100% - 22px); /* Ajuste para el padding */
+            }
+
+            .login-container button {
+                padding: 10px;
+                background-color: #007bff;
+                color: #ffffff;
+                font-size: 16px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+                .login-container button:hover {
+                    background-color: #0056b3;
+                }
+
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Logo con imagen responsiva -->
+        <img src="~/Content/images/logoSEALpng-removebg-preview.png" alt="Logo de la Empresa" />
+        <h2>Iniciar Sesión</h2>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="error-message">@ViewBag.Error</div>
+        }
+
+        <form method="post" action="/Account/Login">
+            <input type="text" id="username" name="username" placeholder="Usuario" required />
+            <input type="password" id="password" name="password" placeholder="Contraseña" required />
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+</body>
+</html>
