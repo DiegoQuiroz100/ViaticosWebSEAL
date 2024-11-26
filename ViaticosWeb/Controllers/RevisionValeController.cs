@@ -63,17 +63,18 @@ namespace ViaticosWeb.Controllers
 
             try
             {
+                int usuariof = (int)Session["UserId"];  // Esto debe estar guardado previamente en la sesión al momento de iniciar sesión
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
                     foreach (var solcod in seleccionados)
                     {
-                        string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecrev = GETDATE(), usurev = @usurev, estado = 'R' WHERE solcod = @solcod";
+                        string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecrev = GETDATE(), usurev = @usuariof, estado = 'R' WHERE solcod = @solcod";
                         using (SqlCommand cmd = new SqlCommand(query, connection))
                         {
                             // Asignar parámetros para la consulta SQL
-                            cmd.Parameters.AddWithValue("@usurev", User.Identity.Name); // Suponiendo que el usuario está autenticado
+                            cmd.Parameters.AddWithValue("@usuariof", usuariof); // Código del usuario.
                             cmd.Parameters.AddWithValue("@solcod", solcod);
 
                             cmd.ExecuteNonQuery();
@@ -94,34 +95,7 @@ namespace ViaticosWeb.Controllers
 
             return RedirectToAction("Index");
         }
-        //[HttpPost]
-        //public ActionResult Revisar(List<int> seleccionados)
-        //{
-        //    if (seleccionados == null || seleccionados.Count == 0)
-        //    {
-        //        TempData["ErrorMessage"] = "No se seleccionaron vales para revisar.";
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        foreach (var id in seleccionados)
-        //        {
-        //            string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecrev = GETDATE(), usurev = @usurev, estado = 'R' WHERE solcod = @solcod";
-        //            //string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecrev = GETDATE(), estado = 'R' WHERE solcod = @solcod";
-        //            SqlCommand cmd = new SqlCommand(query, connection);
-
-        //            cmd.Parameters.AddWithValue("@solcod", id);
-
-        //            connection.Open();
-        //            cmd.ExecuteNonQuery();
-        //            connection.Close();
-        //        }
-        //    }
-
-        //    TempData["SuccessMessage"] = "Vales revisados con éxito.";
-        //    return RedirectToAction("Index");
-        //}
+       
 
         [HttpPost]
         public ActionResult Anular(List<int> seleccionados)
@@ -134,17 +108,19 @@ namespace ViaticosWeb.Controllers
 
             try
             {
+                int usuariof = (int)Session["UserId"];  // Esto debe estar guardado previamente en la sesión al momento de iniciar sesión
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
                     foreach (var solcod in seleccionados)
                     {
-                        string query = "UPDATE [Viaticos].[dbo].[VehCab] SET fecanu = GETDATE(), usuanu = @usuanu, estado = 'X' WHERE solcod = @solcod";
+                        string query = "UPDATE [Viaticos].[dbo].[VehCab] SET fecanu = GETDATE(), usuanu = @usuariof, estado = 'X' WHERE solcod = @solcod";
                         using (SqlCommand cmd = new SqlCommand(query, connection))
                         {
                             // Asignar parámetros para la consulta SQL
-                            cmd.Parameters.AddWithValue("@usuanu", User.Identity.Name); // Usuario actual
+                            cmd.Parameters.AddWithValue("@usuariof", usuariof); // Código del usuario.
                             cmd.Parameters.AddWithValue("@solcod", solcod);
 
                             cmd.ExecuteNonQuery();

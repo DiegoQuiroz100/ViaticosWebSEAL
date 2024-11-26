@@ -34,7 +34,7 @@ namespace ViaticosWeb.Controllers
                     INNER JOIN [Viaticos].[dbo].[VehMot] D ON A.tipman = D.item
                     INNER JOIN [Viaticos].[dbo].[VehGrifos] E ON A.codgrifo = e.item
                     INNER JOIN [Viaticos].[dbo].[VehMar] F ON C.MarCod = F.Item
-                    WHERE A.TIPO = 'V' AND A.estado = 'G'
+                    WHERE A.TIPO = 'V' AND A.estado = 'G' and a.gercod=@Gerencia
                     ORDER BY a.solcod ASC";
 
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -72,14 +72,17 @@ namespace ViaticosWeb.Controllers
                 TempData["ErrorMessage"] = "Debe seleccionar al menos un vale para autorizar.";
                 return RedirectToAction("Index");
             }
-
+            int usuariof = (int)Session["UserId"];
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 foreach (var solcod in seleccionados)
                 {
-                    string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecaut = GETDATE(), estado = 'A' WHERE solcod = @solcod";
+                    string query = "UPDATE [Viaticos].[dbo].[VehCab] " +
+                               "SET Fecaut = GETDATE(), usuaut = @usuariof, estado = 'A' " +
+                               "WHERE solcod = @solcod";
                     SqlCommand cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@usuariof", usuariof); // Código del usuario.
                     cmd.Parameters.AddWithValue("@solcod", solcod);
                     cmd.ExecuteNonQuery();
                 }
@@ -98,14 +101,25 @@ namespace ViaticosWeb.Controllers
                 return RedirectToAction("Index");
             }
 
+            //if(Session["UserId"] ==null)
+            //{
+            //    return RedirectToAction("Login", "Account");
+            //}
+
+            int usuariof = (int)Session["UserId"];
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 foreach (var solcod in seleccionados)
                 {
-                    string query = "UPDATE [Viaticos].[dbo].[VehCab] SET fecanu = GETDATE(), estado = 'X' WHERE solcod = @solcod";
+                    string query = @"
+                UPDATE [Viaticos].[dbo].[VehCab] 
+                SET fecanu = GETDATE(), usuanu = @usuariof, estado = 'X' 
+                WHERE solcod = @solcod";
                     SqlCommand cmd = new SqlCommand(query, connection);
                     cmd.Parameters.AddWithValue("@solcod", solcod);
+                    cmd.Parameters.AddWithValue("@usuariof", usuariof); // Código del usuario.
                     cmd.ExecuteNonQuery();
                 }
             }

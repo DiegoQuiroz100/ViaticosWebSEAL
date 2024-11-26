@@ -183,7 +183,9 @@ namespace VehiculosCombustible.Controllers
             }
             return Json(vehiculo, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
+
         public ActionResult Grabar(VehiculoCombustible model)
         {
             if (!ModelState.IsValid)
@@ -193,6 +195,15 @@ namespace VehiculosCombustible.Controllers
 
             try
             {
+                // Obtener el 'userId' de la sesión
+                int usuariof = (int)Session["UserId"];  // Esto debe estar guardado previamente en la sesión al momento de iniciar sesión
+
+                // Verificar si el usuario está autenticado y el 'userId' es válido
+                if (usuariof <= 0)
+                {
+                    return Json(new { success = false, message = "Usuario no autenticado o ID inválido." });
+                }
+
                 using (var conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
@@ -226,10 +237,10 @@ namespace VehiculosCombustible.Controllers
                             cmd.Parameters.Add("@kmant", SqlDbType.Int).Value = 0;
                             cmd.Parameters.Add("@kmact", SqlDbType.Int).Value = 0;
                             cmd.Parameters.Add("@km", SqlDbType.Decimal).Value = model.Kilometraje;
-                            cmd.Parameters.Add("@tipman", SqlDbType.Int).Value = 3; // Hardcoded as per VB logic
+                            cmd.Parameters.Add("@tipman", SqlDbType.Int).Value = 3; 
                             cmd.Parameters.Add("@observaciones", SqlDbType.VarChar, 200).Value = "VALE DE COMBUSTIBLE";
                             cmd.Parameters.Add("@codgrifo", SqlDbType.Int).Value = model.GrifoId;
-                            cmd.Parameters.Add("@usureg", SqlDbType.VarChar, 50).Value = User.Identity.Name;
+                            cmd.Parameters.Add("@usureg", SqlDbType.Int).Value = usuariof; // Usamos el 'userId' aquí, obtenido de la sesión
                             cmd.Parameters.Add("@gercod", SqlDbType.Int).Value = model.GerenciaId;
                             cmd.Parameters.Add("@arecod", SqlDbType.Int).Value = model.UnidadId;
                             cmd.Parameters.Add("@anno", SqlDbType.Int).Value = DateTime.Now.Year;
@@ -251,8 +262,8 @@ namespace VehiculosCombustible.Controllers
                             // Insertar detalle
                             var insertCmd = new SqlCommand(
                                 @"INSERT INTO [Viaticos].[dbo].[VehDet] 
-                          (solcod, codmot, descripcion, cantidad, anno, TipMed)
-                          VALUES (@IdHeader, 4, 'COMBUSTIBLE', @Cantidad, @Anio, @TipMed)",
+                                      (solcod, codmot, descripcion, cantidad, anno, TipMed)
+                                      VALUES (@IdHeader, 4, 'COMBUSTIBLE', @Cantidad, @Anio, @TipMed)",
                                 conn,
                                 transaction
                             );

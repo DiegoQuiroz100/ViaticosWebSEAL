@@ -25,8 +25,9 @@ namespace ViaticosWeb.Controllers
 
         private List<ImprimirValeModel> ImprimirVale()
         {
+            int usuarioreg = (int)Session["UserId"];  // Esto debe estar guardado previamente en la sesión al momento de iniciar sesión
             List<ImprimirValeModel> vehiculos = new List<ImprimirValeModel>();
-
+            
             string query = @"SELECT a.solcod, F.MarNom, c.vehpla, c.Asignado, d.descripcion, a.km, b.cantidad, 
                                     e.descripcion AS grifo, c.vo2cod AS CodAct, b.tipmed AS TipoMedida 
                              FROM [Viaticos].[dbo].[VehCab] A 
@@ -35,12 +36,13 @@ namespace ViaticosWeb.Controllers
                              INNER JOIN [Viaticos].[dbo].[VehMot] D ON A.tipman = D.item 
                              INNER JOIN [Viaticos].[dbo].[VehGrifos] E ON A.codgrifo = e.item 
                              INNER JOIN [Viaticos].[dbo].[VehMar] F ON C.MarCod = F.Item 
-                             WHERE A.TIPO = 'V' AND a.estado = 'R'
+                             WHERE A.TIPO = 'V' AND a.estado = 'R'  and usureg=@usuarioreg
                              ORDER BY 1 ASC";
 
             using (var connection = new SqlConnection(connectionString))
             using (var command = new SqlCommand(query, connection))
             {
+                command.Parameters.AddWithValue("@usuarioreg", usuarioreg);
 
 
                 connection.Open();
@@ -77,7 +79,7 @@ namespace ViaticosWeb.Controllers
                 TempData["ErrorMessage"] = "Debe seleccionar al menos un vehículo para descargar.";
                 return RedirectToAction("Index");
             }
-
+            int usuarioimp = (int)Session["UserId"];  // Esto debe estar guardado previamente en la sesión al momento de iniciar sesión
             List<ImprimirValeModel> vehiculos = ImprimirVale().Where(v => seleccionados.Contains(int.Parse(v.SolCod))).ToList();
 
             using (var workbook = new XLWorkbook())
@@ -123,8 +125,9 @@ namespace ViaticosWeb.Controllers
                         connection.Open();
                         foreach (var solcod in seleccionados)
                         {
-                            string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecimp = GETDATE(), estado = 'I' WHERE solcod = @solcod";
+                            string query = "UPDATE [Viaticos].[dbo].[VehCab] SET Fecimp = GETDATE(),usuimp=@usuarioimp, estado = 'I' WHERE solcod = @solcod";
                             SqlCommand cmd = new SqlCommand(query, connection);
+                            cmd.Parameters.AddWithValue("@usuariof", usuarioimp); // Código del usuario.
                             cmd.Parameters.AddWithValue("@solcod", solcod);
                             cmd.ExecuteNonQuery();
                         }
