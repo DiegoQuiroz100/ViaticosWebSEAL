@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Globalization;
+using System.Web.Mvc;
 
 namespace ViaticosWeb.Models
 {
@@ -62,30 +63,31 @@ namespace ViaticosWeb.Models
         }
 
 
-        public List<ListaVehiculos> ObtenerHistorialVehiculo()
+        public List<ListaVehiculos> ObtenerHistorialVehiculo(int item)
         {
             List<ListaVehiculos> historialVehiculo = new List<ListaVehiculos>();
 
             using (SqlConnection con1 = new SqlConnection(connectionString))
             {
                 string listquery = @"
-                        SELECT solcod, 
-                               CASE WHEN tipo = 'M' THEN 'MANTENIMIENTO' ELSE 'COMBUSTIBLE' END AS tipo, 
-                               a.fegreg, 
-                               kmant, 
-                               kmact, 
-                               km, 
-                               B.descripcion AS motivo, 
-                               observaciones, 
-                               C.descripcion AS grifo
-                                FROM [Viaticos].[dbo].[VehCab] A 
-                                INNER JOIN [Viaticos].[dbo].[VehMot] B ON A.tipman = B.Item 
-                                LEFT JOIN [Viaticos].[dbo].[VehGrifos] C ON A.codgrifo = C.Item 
-                                WHERE A.codveh = @codveh
-                                ORDER BY solcod ASC";
+            SELECT solcod, 
+                   CASE WHEN tipo = 'M' THEN 'MANTENIMIENTO' ELSE 'COMBUSTIBLE' END AS tipo, 
+                   a.fegreg, 
+                   kmant, 
+                   kmact, 
+                   km, 
+                   B.descripcion AS motivo, 
+                   observaciones, 
+                   C.descripcion AS grifo
+            FROM [Viaticos].[dbo].[VehCab] A 
+            INNER JOIN [Viaticos].[dbo].[VehMot] B ON A.tipman = B.Item 
+            LEFT JOIN [Viaticos].[dbo].[VehGrifos] C ON A.codgrifo = C.Item 
+            WHERE A.codveh = @codveh
+            ORDER BY solcod ASC";
 
                 using (SqlCommand cmd = new SqlCommand(listquery, con1))
                 {
+                    cmd.Parameters.AddWithValue("@codveh", item); // Filtra por el vehículo seleccionado
                     con1.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -113,6 +115,44 @@ namespace ViaticosWeb.Models
             }
             return historialVehiculo;
         }
+
+
+        // Acción para obtener los detalles de un historial específico
+        public List<ListaDetalle> ObtenerDetalleHistorial(int solcod)
+        {
+            List<ListaDetalle> detalleHistorial = new List<ListaDetalle>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = @"
+                        SELECT solcod, descripcion, cantidad
+                        FROM [Viaticos].[dbo].[VehDet]
+                        WHERE solcod = @solcod
+                        ORDER BY 1 ASC";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@solcod", solcod);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            detalleHistorial.Add(new ListaDetalle
+                            {
+                                SolCod = reader["solcod"] == DBNull.Value ? 0 : Convert.ToInt32(reader["solcod"]),
+                                Descripcion = reader["descripcion"] == DBNull.Value ? "" : reader["descripcion"].ToString(),
+                                Cantidad = reader["cantidad"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["cantidad"])
+                            });
+                        }
+                    }
+                }
+            }
+            return detalleHistorial;
+        }
+
         public List<ListaVales> ObtenerListaVales()
         {
             List<ListaVales> ListaVales = new List<ListaVales>();

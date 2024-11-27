@@ -8,13 +8,8 @@
     @Styles.Render("~/Content/css")
  
     @{var Permisos = Session["Permisos"].ToString();}
-
 </head>
-
-
 <body>
-
-
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark ">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3 d-flex align-items-center" href="@Url.Action("Index","Viaticos")">
@@ -50,7 +45,6 @@
                 </li>
             </ul>
         </nav>
-
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -65,9 +59,7 @@
                             </a>
                             @if (Permisos.Contains("6"))
                             {
-
-
-                                <div class="sb-sidenav-menu-heading">Viáticos</div>
+                               <div class="sb-sidenav-menu-heading">Viáticos</div>
 
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                     <div class="sb-nav-link-icon"><i class="fas fa-car-alt"></i></div>
@@ -75,65 +67,66 @@
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
                             }
-                            @if (Permisos.Contains("67,68"))
-                            {
-                                <div class="collapse" id="collapseLayouts">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="@Url.Action("ListaVehiculos", "Viaticos")">Lista de Vehiculos</a>
+                                @if (Permisos.Contains("67,68"))
+                                {
+                                    <div class="collapse" id="collapseLayouts">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="@Url.Action("ListaVehiculos", "Viaticos")">Lista de Vehiculos</a>
+                                            <a class="nav-link" href="layout-sidenav-light.html"></a>
+                                        </nav>
+                                        @*<nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="@Url.Action("Index","Mantenimiento")">Mantenimiento de Vehiculos</a>
                                         <a class="nav-link" href="layout-sidenav-light.html"></a>
-                                    </nav>
-                                    @*<nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="@Url.Action("Index","Mantenimiento")">Mantenimiento de Vehiculos</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html"></a>
-                                </nav>*@
-                                </div>
-                            }
+                                    </nav>*@
+                                    </div>
+                                }
 
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-money-bill-alt"></i></div>
-                                Vales Combustible
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    @if (Permisos.Contains("91"))
-                                    {
-                                        <a class="nav-link collapsed" href="@Url.Action("Index", "VehiculoCombustible")">
-                                            SOLICITUD VALE
-                                        </a>
-                                    }
-                                    @if (Permisos.Contains("101"))
-                                    {
-                                        <a class="nav-link collapsed" href="@Url.Action("Index", "AutorizacionVale")">
-                                            AUTORIZAR VALES
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-money-bill-alt"></i></div>
+                                    Vales Combustible
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                        @if (Permisos.Contains("91"))
+                                        {
+                                            <a class="nav-link collapsed" href="@Url.Action("Index", "VehiculoCombustible")">
+                                                SOLICITUD VALE
+                                            </a>
+                                        }
+                                        @if (Permisos.Contains("101"))
+                                        {
+                                            <a class="nav-link collapsed" href="@Url.Action("Index", "AutorizacionVale")">
+                                                AUTORIZAR VALES
 
-                                        </a>
-                                    }
-                                    @if (Permisos.Contains("107"))
-                                    {
-                                        <a class="nav-link collapsed" href="@Url.Action("Index", "RevisionVale")">
-                                            REVISAR VALES
+                                            </a>
+                                        }
+                                        @if (Permisos.Contains("107"))
+                                        {
+                                            <a class="nav-link collapsed" href="@Url.Action("Index", "RevisionVale")">
+                                                REVISAR VALES
 
-                                        </a>
-                                    }
-                                    @if (Permisos.Contains("102"))
-                                    {
-                                        <a class="nav-link collapsed" href="@Url.Action("Index", "ImprimirVale")">
-                                            IMPRIMIR VALES
+                                            </a>
+                                        }
+                                        @if (Permisos.Contains("102"))
+                                        {
+                                            <a class="nav-link collapsed" href="@Url.Action("Index", "ImprimirVale")">
+                                                IMPRIMIR VALES
 
-                                        </a>
-                                    }
+                                            </a>
+                                        }
 
-                                    @if (Permisos.Contains("109"))
-                                    {
-                                        <a class="nav-link collapsed" href="@Url.Action("ListaVales", "Viaticos")">
-                                            LISTA VALES FACTURADOS
+                                        @if (Permisos.Contains("109"))
+                                        {
+                                            <a class="nav-link collapsed" href="@Url.Action("ListaVales", "Viaticos")">
+                                                LISTA VALES FACTURADOS
 
-                                        </a>
-                                    }
+                                            </a>
+                                        }
 
                                 </nav>
                             </div>
+
 
                         </div>
                     </div>
@@ -142,6 +135,7 @@
                     Start Bootstrap
                 </div>*@
                 </nav>
+                            
             </div>
            
            

@@ -1,0 +1,126 @@
+﻿@model List<ViaticosWeb.Models.ListaVehiculos>
+
+@{
+    ViewBag.Title = "Historial de Solicitudes";
+}
+
+<!-- Título de la página -->
+<div class="container my-4">
+    <h2 class="text-center text-primary">Historial de Solicitudes de Vales</h2>
+
+    <!-- Tabla responsiva -->
+    <div class="table-responsive">
+        <table id="historialVehiculoTable" class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>SolCod</th>
+                    <th>Tipo</th>
+                    <th>Fecha Registro</th>
+                    <th>Kilómetros</th>
+                    <th>Motivo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SolCod</td>
+                        <td>@item.Tipo</td>
+                        <td>@item.FechaRegistro.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Km</td>
+                        <td>@item.Motivo</td>
+                        <td>
+                            <!-- Botón para abrir el modal -->
+                            <button class="btn btn-info btn-sm" onclick="verDetalle(@item.SolCod)">
+                                <i class="fas fa-eye"></i> Ver Detalle
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal para mostrar los detalles -->
+<div class="modal fade" id="detalleModal" tabindex="-1" role="dialog" aria-labelledby="detalleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleModalLabel">Detalle del Historial</h5>
+                <!-- Botón para cerrar el modal -->
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Mostrar el SolCod en el cuerpo del modal -->
+                <p><strong>Codigo Solicitud:</strong> <span id="modalSolCod"></span></p>
+
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detalleHistorialBody">
+                            <!-- Aquí se llenarán los detalles dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- Botón para cerrar el modal -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Referencias de scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<script>
+    // Función para cargar los detalles del historial y mostrar el modal
+    function verDetalle(solcod) {
+        $.ajax({
+            url: '@Url.Action("ObtenerDetalle", "Viaticos")', // Acción para obtener los detalles
+            type: 'GET',
+            data: { solcod: solcod },
+            success: function (data) {
+                // Limpiar el contenido previo del modal
+                $('#detalleHistorialBody').empty();
+
+                // Mostrar el SolCod en el modal
+                $('#modalSolCod').text(solcod); // Aquí mostramos el SolCod en el modal
+
+                // Llenar el modal con los datos obtenidos
+                data.forEach(function (detalle) {
+                    $('#detalleHistorialBody').append(`
+                        <tr>
+                            <td>${detalle.Descripcion}</td>
+                            <td>${detalle.Cantidad}</td>
+                        </tr>
+                    `);
+                });
+
+                // Mostrar el modal
+                $('#detalleModal').modal('show');
+            },
+            error: function () {
+                alert('Error al cargar los detalles.');
+            }
+        });
+    }
+
+    // Asegurarse de que el modal se cierre correctamente con jQuery
+    $('#detalleModal').on('hidden.bs.modal', function () {
+        // Aquí puedes agregar cualquier lógica adicional que desees cuando el modal se cierre
+        $('#detalleHistorialBody').empty(); // Limpiar el contenido del modal al cerrarlo
+    });
+</script>

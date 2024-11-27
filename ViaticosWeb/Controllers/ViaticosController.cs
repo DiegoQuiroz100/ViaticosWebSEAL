@@ -39,11 +39,20 @@ namespace ViaticosWeb.Controllers
         public ActionResult Historial(int item)
         {
             dbVehiculos vehiculos = new dbVehiculos();
-            var listaVehiculos = vehiculos.ObtenerHistorialVehiculo();
-
-            // Pasar la lista de vehículos a la vista
-            return View(listaVehiculos);
+            var listaHistorial = vehiculos.ObtenerHistorialVehiculo(item); // Pasa el item
+            return View(listaHistorial);
         }
+
+        [HttpGet]
+        public JsonResult ObtenerDetalle(int solcod)
+        {
+            dbVehiculos vehiculos = new dbVehiculos();
+            // Llama a tu método para obtener los detalles
+            var listaHistorial = vehiculos.ObtenerDetalleHistorial(solcod); // Pasa el item
+            // Retorna el resultado como JSON
+            return Json(listaHistorial, JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult ListaVales()
         {

@@ -433,6 +433,7 @@
     <Compile Include="Models\CustomAuthorizeAttribute.cs" />
     <Compile Include="Models\dbVehiculos.cs" />
     <Compile Include="Models\ImprimirValeModel.cs" />
+    <Compile Include="Models\ListaDetalle.cs" />
     <Compile Include="Models\ListaVales.cs" />
     <Compile Include="Models\ListaVehiculos.cs" />
     <Compile Include="Models\RevisionVale.cs" />
@@ -479,6 +480,8 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="logoSEALpng.ico" />
+    <Content Include="logoSealSinTexto.ico" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -573,6 +576,7 @@
     <Content Include="Views\VehiculoCombustible\Index.cshtml" />
     <Content Include="Views\ImprimirVale\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Viaticos\Historial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -588,6 +592,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logoSealSinTexto.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
