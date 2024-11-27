@@ -36,6 +36,8 @@ namespace ViaticosWeb.Controllers
             {
                 // Autenticación exitosa
                 Session["UserId"] = userId;
+                Session["Permisos"] =("1,3,4,5,6,67,68,69,91,101,102,107,109");
+
                 return RedirectToAction("Index", "Viaticos");
             }
             else if (userId == 0)
