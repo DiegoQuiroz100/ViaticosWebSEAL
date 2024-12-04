@@ -11,7 +11,7 @@ using ViaticosWeb.Models;
 
 namespace ViaticosWeb.Controllers
 {
-    [CustomAuthorize]
+   
     public class ImprimirValeController : Controller
     {
         private readonly string connectionString = "data source=192.168.53.43;initial catalog=Viaticos;user id=practact;password=Sistemas2024;";

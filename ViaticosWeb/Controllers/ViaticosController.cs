@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 
 namespace ViaticosWeb.Controllers
 {
-    [CustomAuthorize]
+   
     public class ViaticosController : Controller
     {
         // GET: Viaticos

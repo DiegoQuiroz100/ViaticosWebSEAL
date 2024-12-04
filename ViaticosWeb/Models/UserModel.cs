@@ -5,8 +5,9 @@ using System.Web;
 
 namespace ViaticosWeb.Models
 {
-    public class User
+    public class UserModel
     {
+        public int IdUsuario { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
     }

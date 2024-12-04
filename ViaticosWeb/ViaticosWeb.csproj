@@ -430,15 +430,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AutorizacionVale.cs" />
-    <Compile Include="Models\CustomAuthorizeAttribute.cs" />
     <Compile Include="Models\dbVehiculos.cs" />
     <Compile Include="Models\ImprimirValeModel.cs" />
     <Compile Include="Models\ListaDetalle.cs" />
     <Compile Include="Models\ListaVales.cs" />
     <Compile Include="Models\ListaVehiculos.cs" />
     <Compile Include="Models\RevisionVale.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserAuthenticator.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserService.cs" />
     <Compile Include="Models\VehiculoCombustible.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -575,8 +574,8 @@
     <Content Include="Views\Viaticos\ValeCombustible.cshtml" />
     <Content Include="Views\VehiculoCombustible\Index.cshtml" />
     <Content Include="Views\ImprimirVale\Index.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Viaticos\Historial.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

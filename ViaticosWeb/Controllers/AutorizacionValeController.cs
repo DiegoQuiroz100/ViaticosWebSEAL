@@ -8,7 +8,7 @@ using ViaticosWeb.Models; //
 
 namespace ViaticosWeb.Controllers
 {
-    [CustomAuthorize]
+    
     public class AutorizacionValeController : Controller
     {
         // Cadena de conexión especificada
@@ -20,9 +20,40 @@ namespace ViaticosWeb.Controllers
             var vales = ObtenerValesGenerados();
             return View(vales);
         }
+
+        // Método para obtener el código de gerencia del usuario actual
+        private int ObtenerCodigoGerencia()
+        {
+            int codger = 0;  // Valor por defecto
+
+            int usuariof = (int)Session["UserId"]; // Obtener el ID de usuario desde la sesión
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT areusr FROM [AdmUsu].[dbo].[tbl_Usuarios] WHERE estusr = 'A' AND ideusr = @usuariof";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@usuariof", usuariof);
+
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        codger = Convert.ToInt32(reader["areusr"]);  // Obtener el código de gerencia
+                    }
+                }
+            }
+
+            return codger;
+        }
+
+        // Método para obtener los vales generados para la gerencia del usuario
         private List<AutorizacionVale> ObtenerValesGenerados()
         {
             var vales = new List<AutorizacionVale>();
+
+            int codger = ObtenerCodigoGerencia();  // Obtener el código de gerencia del usuario
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -34,10 +65,12 @@ namespace ViaticosWeb.Controllers
                     INNER JOIN [Viaticos].[dbo].[VehMot] D ON A.tipman = D.item
                     INNER JOIN [Viaticos].[dbo].[VehGrifos] E ON A.codgrifo = e.item
                     INNER JOIN [Viaticos].[dbo].[VehMar] F ON C.MarCod = F.Item
-                    WHERE A.TIPO = 'V' AND A.estado = 'G'
+                    WHERE A.TIPO = 'V' AND A.estado = 'G' AND A.gercod = @Gerencia
                     ORDER BY a.solcod ASC";
 
                 SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Gerencia", codger);
+
                 connection.Open();
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -62,8 +95,8 @@ namespace ViaticosWeb.Controllers
 
             return vales;
         }
-       
 
+        // Acción para autorizar los vales seleccionados
         [HttpPost]
         public ActionResult Autorizar(List<int> seleccionados)
         {
@@ -72,15 +105,17 @@ namespace ViaticosWeb.Controllers
                 TempData["ErrorMessage"] = "Debe seleccionar al menos un vale para autorizar.";
                 return RedirectToAction("Index");
             }
+
             int usuariof = (int)Session["UserId"];
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 foreach (var solcod in seleccionados)
                 {
                     string query = "UPDATE [Viaticos].[dbo].[VehCab] " +
-                               "SET Fecaut = GETDATE(), usuaut = @usuariof, estado = 'A' " +
-                               "WHERE solcod = @solcod";
+                                   "SET Fecaut = GETDATE(), usuaut = @usuariof, estado = 'A' " +
+                                   "WHERE solcod = @solcod";
                     SqlCommand cmd = new SqlCommand(query, connection);
                     cmd.Parameters.AddWithValue("@usuariof", usuariof); // Código del usuario.
                     cmd.Parameters.AddWithValue("@solcod", solcod);
@@ -92,6 +127,7 @@ namespace ViaticosWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        // Acción para anular los vales seleccionados
         [HttpPost]
         public ActionResult Anular(List<int> seleccionados)
         {
@@ -101,11 +137,6 @@ namespace ViaticosWeb.Controllers
                 return RedirectToAction("Index");
             }
 
-            //if(Session["UserId"] ==null)
-            //{
-            //    return RedirectToAction("Login", "Account");
-            //}
-
             int usuariof = (int)Session["UserId"];
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -114,9 +145,9 @@ namespace ViaticosWeb.Controllers
                 foreach (var solcod in seleccionados)
                 {
                     string query = @"
-                UPDATE [Viaticos].[dbo].[VehCab] 
-                SET fecanu = GETDATE(), usuanu = @usuariof, estado = 'X' 
-                WHERE solcod = @solcod";
+                        UPDATE [Viaticos].[dbo].[VehCab] 
+                        SET fecanu = GETDATE(), usuanu = @usuariof, estado = 'X' 
+                        WHERE solcod = @solcod";
                     SqlCommand cmd = new SqlCommand(query, connection);
                     cmd.Parameters.AddWithValue("@solcod", solcod);
                     cmd.Parameters.AddWithValue("@usuariof", usuariof); // Código del usuario.
@@ -128,5 +159,4 @@ namespace ViaticosWeb.Controllers
             return RedirectToAction("Index");
         }
     }
-
 }
